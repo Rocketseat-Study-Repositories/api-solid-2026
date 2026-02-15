@@ -5,4 +5,4 @@ const port = 3333;
 
 app
   .listen({ host, port })
-  .then(() => console.log(`🏋️ Server running | Address: ${host}:${port}`));
+  .then(() => console.log(`🏋️ | Server running | Address: ${host}:${port}`));
