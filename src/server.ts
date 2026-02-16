@@ -1,8 +1,8 @@
 import { app } from './app.js';
-
-const host = '0.0.0.0';
-const port = 3333;
+import { env } from '@/env/index.js';
 
 app
-  .listen({ host, port })
-  .then(() => console.log(`🏋️ | Server running | Address: ${host}:${port}`));
+  .listen({ host: env.HOST, port: env.PORT })
+  .then(() =>
+    console.log(`🏋️ | Server running | Address: ${env.HOST}:${env.PORT}`)
+  );

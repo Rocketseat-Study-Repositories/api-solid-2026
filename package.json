@@ -28,7 +28,9 @@
   "dependencies": {
     "@prisma/adapter-pg": "7.4.0",
     "@prisma/client": "7.4.0",
+    "dotenv": "17.3.1",
     "fastify": "5.7.4",
-    "pg": "8.18.0"
+    "pg": "8.18.0",
+    "zod": "4.3.6"
   }
 }
