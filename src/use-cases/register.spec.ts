@@ -1,14 +1,20 @@
-import { expect, describe, it } from 'vitest';
+import { expect, describe, it, beforeEach } from 'vitest';
 import { RegisterUseCase } from './register.js';
 import { compare } from 'bcryptjs';
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository.js';
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.js';
 
-describe('Register Use Case', () => {
-  it('should be able to register', async () => {
-    const registerUseCase = new RegisterUseCase(new InMemoryUserRepository());
+let usersRepository: InMemoryUserRepository;
+let sut: RegisterUseCase;
 
-    const { user } = await registerUseCase.execute({
+describe('Register Use Case', () => {
+  beforeEach(() => {
+    usersRepository = new InMemoryUserRepository();
+    sut = new RegisterUseCase(usersRepository);
+  });
+
+  it('should be able to register', async () => {
+    const { user } = await sut.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
@@ -18,11 +24,9 @@ describe('Register Use Case', () => {
   });
 
   it('should hash user password upon registration', async () => {
-    const registerUseCase = new RegisterUseCase(new InMemoryUserRepository());
-
     const PASSWORD_TEST = '123456';
 
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: PASSWORD_TEST,
@@ -37,18 +41,16 @@ describe('Register Use Case', () => {
   });
 
   it('should not be able to register two users with same email', async () => {
-    const registerUseCase = new RegisterUseCase(new InMemoryUserRepository());
-
     const USER_TEST = {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
     };
 
-    await registerUseCase.execute(USER_TEST);
+    await sut.execute(USER_TEST);
 
-    await expect(() =>
-      registerUseCase.execute(USER_TEST)
-    ).rejects.toBeInstanceOf(UserAlreadyExistsError);
+    await expect(() => sut.execute(USER_TEST)).rejects.toBeInstanceOf(
+      UserAlreadyExistsError
+    );
   });
 });
