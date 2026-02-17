@@ -1,8 +1,8 @@
 import { prisma } from '@/lib/prisma.js';
 import { UserCreateInput } from '../../../generated/prisma/models.js';
-import { UserRepository } from '../users-repository.js';
+import { UsersRepository } from '../users-repository.js';
 
-export class PrismaUsersRepository implements UserRepository {
+export class PrismaUsersRepository implements UsersRepository {
   async findByEmail(email: string) {
     return await prisma.user.findUnique({
       where: { email },

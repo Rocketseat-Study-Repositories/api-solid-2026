@@ -1,8 +1,8 @@
 import { User } from '../../../generated/prisma/browser.js';
 import { UserCreateInput } from '../../../generated/prisma/models.js';
-import { UserRepository } from '../users-repository.js';
+import { UsersRepository } from '../users-repository.js';
 
-export class InMemoryUserRepository implements UserRepository {
+export class InMemoryUserRepository implements UsersRepository {
   public items: User[] = [];
 
   async findByEmail(email: string) {
