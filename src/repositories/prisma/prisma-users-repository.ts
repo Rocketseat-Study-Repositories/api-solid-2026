@@ -3,6 +3,12 @@ import { UserCreateInput } from '../../../generated/prisma/models.js';
 import { UsersRepository } from '../users-repository.js';
 
 export class PrismaUsersRepository implements UsersRepository {
+  async findById(id: string) {
+    return await prisma.user.findUnique({
+      where: { id },
+    });
+  }
+
   async findByEmail(email: string) {
     return await prisma.user.findUnique({
       where: { email },
